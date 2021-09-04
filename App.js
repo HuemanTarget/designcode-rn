@@ -1,6 +1,5 @@
 import React from 'react';
 import { ScrollView, SafeAreaView } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import styled from 'styled-components';
 import { Card } from './components/Card';
 import { NotificationIcon } from './components/Icons';
@@ -39,27 +38,16 @@ export default function App() {
             style={{ paddingBottom: 30 }}
             showsHorizontalScrollIndicator={false}
           >
-            <Card
-              title='Styled Components 1'
-              image={require('./assets/background2.jpg')}
-              logo={require('./assets/logo-react.png')}
-              subtitle='5 of 12 sections'
-              caption='React Native'
-            />
-            <Card
-              title='Styled Components 2'
-              image={require('./assets/background2.jpg')}
-              logo={require('./assets/logo-react.png')}
-              subtitle='5 of 12 sections'
-              caption='React Native'
-            />
-            <Card
-              title='Styled Components 3'
-              image={require('./assets/background2.jpg')}
-              logo={require('./assets/logo-react.png')}
-              subtitle='5 of 12 sections'
-              caption='React Native'
-            />
+            {cards.map((card, index) => (
+              <Card
+                key={index}
+                title={card.title}
+                image={card.image}
+                logo={card.logo}
+                subtitle={card.subtitle}
+                caption={card.caption}
+              />
+            ))}
           </ScrollView>
         </ScrollView>
       </SafeAreaView>
@@ -129,5 +117,36 @@ const logos = [
   {
     image: require('./assets/logo-sketch.png'),
     text: 'Sketch',
+  },
+];
+
+const cards = [
+  {
+    title: 'React Native for Designers',
+    image: require('./assets/background11.jpg'),
+    subtitle: 'React Native',
+    caption: '1 of 12 sections',
+    logo: require('./assets/logo-react.png'),
+  },
+  {
+    title: 'Styled Components',
+    image: require('./assets/background12.jpg'),
+    subtitle: 'React Native',
+    caption: '2 of 12 sections',
+    logo: require('./assets/logo-react.png'),
+  },
+  {
+    title: 'Props and Icons',
+    image: require('./assets/background13.jpg'),
+    subtitle: 'React Native',
+    caption: '3 of 12 sections',
+    logo: require('./assets/logo-react.png'),
+  },
+  {
+    title: 'Static Data and Loop',
+    image: require('./assets/background14.jpg'),
+    subtitle: 'React Native',
+    caption: '4 of 12 sections',
+    logo: require('./assets/logo-react.png'),
   },
 ];
