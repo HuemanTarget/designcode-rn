@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import styled from 'styled-components';
 import { Card } from './components/Card';
 import { NotificationIcon } from './components/Icons';
+import { Logo } from './components/Logo';
 
 export default function App() {
   return (
@@ -18,6 +19,21 @@ export default function App() {
               style={{ position: 'absolute', right: 20, top: 5 }}
             />
           </TitleBar>
+          <ScrollView
+            horizontal={true}
+            style={{
+              flexDirection: 'row',
+              paddingBottom: 20,
+              paddingLeft: 12,
+              paddingTop: 30,
+            }}
+          >
+            <Logo
+              image={require('./assets/logo-framerx.png')}
+              text='Framer X'
+            />
+            <Logo image={require('./assets/logo-figma.png')} text='Figma' />
+          </ScrollView>
           <Subtitle>Continue Learning</Subtitle>
           <ScrollView
             horizontal={true}
@@ -86,6 +102,6 @@ const Subtitle = styled.Text`
   font-weight: 600;
   font-size: 15px;
   margin-left: 20px;
-  margin-top: 50px;
+  margin-top: 20px;
   text-transform: uppercase;
 `;
