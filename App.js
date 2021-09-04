@@ -50,10 +50,11 @@ export default function App() {
               />
             ))}
           </ScrollView>
-          <Subtitle>Related Courses</Subtitle>
+          <Subtitle>Popular Courses</Subtitle>
           <ScrollView style={{ paddingBottom: 30 }}>
             {courses.map((course, index) => (
               <Course
+                key={index}
                 image={course.image}
                 logo={course.logo}
                 subtitle={course.subtitle}
