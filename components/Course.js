@@ -1,11 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-export const Course = (props) => (
+const Course = (props) => (
   <Container>
     <Cover>
       <Image source={props.image} />
-      <Logo source={props.logo} resizeMode='contain' />
+      <Logo source={props.logo} resizeMode="contain" />
       <CoverWrapper>
         <Subtitle>{props.subtitle}</Subtitle>
         <Title>{props.title}</Title>
@@ -20,6 +20,8 @@ export const Course = (props) => (
     </Content>
   </Container>
 );
+
+export default Course;
 
 const Container = styled.View`
   background: white;

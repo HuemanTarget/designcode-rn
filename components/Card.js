@@ -1,8 +1,8 @@
-import React from 'react';
-import { View, Text } from 'react-native';
-import styled from 'styled-components';
+import React from "react";
+import { View, Text } from "react-native";
+import styled from "styled-components";
 
-export const Card = (props) => {
+const Card = (props) => {
   return (
     <Container>
       <Cover>
@@ -19,6 +19,8 @@ export const Card = (props) => {
     </Container>
   );
 };
+
+export default Card;
 
 const Container = styled.View`
   background: white;

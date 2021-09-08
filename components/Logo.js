@@ -1,12 +1,14 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-export const Logo = (props) => (
+const Logo = (props) => (
   <Container>
-    <Image source={props.image} resizeMode='contain' />
+    <Image source={props.image} resizeMode="contain" />
     <Text>{props.text}</Text>
   </Container>
 );
+
+export default Logo;
 
 const Container = styled.View`
   flex-direction: row;
