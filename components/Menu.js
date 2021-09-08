@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { Animated, TouchableOpacity, Dimensions } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { MenuItem } from "./MenuItem";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -13,12 +14,14 @@ export class Menu extends Component {
   componentDidMount() {
     Animated.spring(this.state.top, {
       toValue: 0,
+      useNativeDriver: false,
     }).start();
   }
 
   toggleMenu = (props) => {
     Animated.spring(this.state.top, {
       toValue: screenHeight,
+      useNativeDriver: false,
     }).start();
   };
 
@@ -44,7 +47,16 @@ export class Menu extends Component {
             <Ionicons name="ios-close" size={44} color="#546bfb" />
           </CloseView>
         </TouchableOpacity>
-        <Content />
+        <Content>
+          {items.map((item, index) => (
+            <MenuItem
+              key={index}
+              icon={item.icon}
+              title={item.title}
+              text={item.text}
+            />
+          ))}
+        </Content>
       </AnimatedContainer>
     );
   }
@@ -80,8 +92,9 @@ const Subtitle = styled.Text`
   margin-top: 8px;
 `;
 const Content = styled.View`
-  height: ${screenHeight};
+  height: ${screenHeight}px;
   background: #f0f3f5;
+  padding: 50px;
 `;
 const CloseView = styled.View`
   width: 44px;
@@ -92,3 +105,26 @@ const CloseView = styled.View`
   align-items: center;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
 `;
+
+const items = [
+  {
+    icon: "ios-settings",
+    title: "Account",
+    text: "settings",
+  },
+  {
+    icon: "ios-card",
+    title: "Billing",
+    text: "payments",
+  },
+  {
+    icon: "ios-compass",
+    title: "Learn React",
+    text: "start course",
+  },
+  {
+    icon: "ios-exit",
+    title: "Log out",
+    text: "see you soon!",
+  },
+];
