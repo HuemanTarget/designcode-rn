@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { ScrollView, SafeAreaView, TouchableOpacity } from "react-native";
+import {
+  ScrollView,
+  SafeAreaView,
+  TouchableOpacity,
+  Animated,
+  Easing,
+  StatusBar,
+} from "react-native";
 import styled from "styled-components";
 import Card from "../components/Card";
 import Course from "../components/Course";
@@ -22,71 +29,122 @@ function mapDispatchToProps(dispatch) {
 }
 
 class HomeScreen extends Component {
+  state = {
+    scale: new Animated.Value(1),
+    opacity: new Animated.Value(1),
+  };
+
+  componentDidMount() {
+    StatusBar.setBarStyle("dark-content", true);
+  }
+
+  componentDidUpdate() {
+    this.toggleMenu();
+  }
+
+  toggleMenu = () => {
+    if (this.props.action == "openMenu") {
+      Animated.spring(this.state.scale, {
+        toValue: 0.9,
+        duration: 300,
+        easing: Easing.in(),
+      }).start();
+      Animated.spring(this.state.opacity, {
+        toValue: 0.5,
+      }).start();
+
+      StatusBar.setBarStyle("light-content", true);
+    }
+
+    if (this.props.action == "closeMenu") {
+      Animated.spring(this.state.scale, {
+        toValue: 1,
+        duration: 300,
+        easing: Easing.in(),
+      }).start();
+      Animated.spring(this.state.opacity, {
+        toValue: 1,
+      }).start();
+
+      StatusBar.setBarStyle("dark-content", true);
+    }
+  };
+
   render() {
     return (
-      <Container>
+      <RootView>
         <Menu />
-        <SafeAreaView>
-          <ScrollView>
-            <TitleBar>
-              <TouchableOpacity onPress={this.props.openMenu}>
-                <Avatar source={require("../assets/avatar.jpg")} />
-              </TouchableOpacity>
-              <Title>Welcome back,</Title>
-              <Name>Josh</Name>
-              <NotificationIcon
-                style={{ position: "absolute", right: 20, top: 5 }}
-              />
-            </TitleBar>
-            <ScrollView
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              style={{
-                flexDirection: "row",
-                paddingBottom: 20,
-                paddingLeft: 12,
-                paddingTop: 30,
-              }}
-            >
-              {logos.map((logo, index) => (
-                <Logo key={index} image={logo.image} text={logo.text} />
-              ))}
-            </ScrollView>
-            <Subtitle>Continue Learning</Subtitle>
-            <ScrollView
-              horizontal={true}
-              style={{ paddingBottom: 30 }}
-              showsHorizontalScrollIndicator={false}
-            >
-              {cards.map((card, index) => (
-                <Card
-                  key={index}
-                  title={card.title}
-                  image={card.image}
-                  logo={card.logo}
-                  subtitle={card.subtitle}
-                  caption={card.caption}
+        <AnimatedContainer
+          style={{
+            transform: [{ scale: this.state.scale }],
+            opacity: this.state.opacity,
+          }}
+        >
+          <SafeAreaView>
+            <ScrollView>
+              <TitleBar>
+                <TouchableOpacity
+                  onPress={this.props.openMenu}
+                  style={{ position: "absolute", top: 0, left: 20 }}
+                >
+                  <Avatar source={require("../assets/avatar.jpg")} />
+                </TouchableOpacity>
+                <Title>Welcome back,</Title>
+                <Name>Josh</Name>
+                <NotificationIcon
+                  style={{ position: "absolute", right: 20, top: 5 }}
                 />
-              ))}
+              </TitleBar>
+              <ScrollView
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                style={{
+                  flexDirection: "row",
+                  paddingBottom: 20,
+                  paddingLeft: 12,
+                  paddingTop: 30,
+                }}
+              >
+                {logos.map((logo, index) => (
+                  <Logo key={index} image={logo.image} text={logo.text} />
+                ))}
+              </ScrollView>
+              <Subtitle>Continue Learning</Subtitle>
+              <ScrollView
+                horizontal={true}
+                style={{ paddingBottom: 30 }}
+                showsHorizontalScrollIndicator={false}
+              >
+                {cards.map((card, index) => (
+                  <Card
+                    key={index}
+                    title={card.title}
+                    image={card.image}
+                    logo={card.logo}
+                    subtitle={card.subtitle}
+                    caption={card.caption}
+                  />
+                ))}
+              </ScrollView>
+              <Subtitle>Popular Courses</Subtitle>
+              <ScrollView style={{ paddingBottom: 30 }}>
+                {courses.map((course, index) => (
+                  <Course
+                    key={index}
+                    image={course.image}
+                    logo={course.logo}
+                    subtitle={course.subtitle}
+                    title={course.title}
+                    avatar={course.avatar}
+                    caption={course.caption}
+                    author={course.author}
+                  />
+                ))}
+              </ScrollView>
             </ScrollView>
-            <Subtitle>Popular Courses</Subtitle>
-            <ScrollView style={{ paddingBottom: 30 }}>
-              {courses.map((course, index) => (
-                <Course
-                  key={index}
-                  image={course.image}
-                  logo={course.logo}
-                  subtitle={course.subtitle}
-                  title={course.title}
-                  avatar={course.avatar}
-                  caption={course.caption}
-                  author={course.author}
-                />
-              ))}
-            </ScrollView>
-          </ScrollView>
-        </SafeAreaView>
-      </Container>
+          </SafeAreaView>
+        </AnimatedContainer>
+      </RootView>
     );
   }
 }
@@ -96,7 +154,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
 const Container = styled.View`
   flex: 1;
   background-color: #f0f3f5;
+  border-radius: 10px;
 `;
+const AnimatedContainer = Animated.createAnimatedComponent(Container);
 const TitleBar = styled.View`
   width: 100%;
   margin-top: 50px;
@@ -125,6 +185,10 @@ const Subtitle = styled.Text`
   margin-left: 20px;
   margin-top: 20px;
   text-transform: uppercase;
+`;
+const RootView = styled.View`
+  background: black;
+  flex: 1;
 `;
 
 const logos = [
