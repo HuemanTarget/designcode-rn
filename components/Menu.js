@@ -1,13 +1,41 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import styled from "styled-components";
+import { Animated } from "react-native";
 
-export const Menu = (props) => (
-  <Container>
-    <Cover />
-    <Content />
-  </Container>
-);
+export class Menu extends Component {
+  state = {
+    top: new Animated.Value(900),
+  };
 
-const Container = styled.View``;
-const Cover = styled.View``;
-const Content = styled.View``;
+  componentDidMount() {
+    Animated.spring(this.state.top, {
+      toValue: 0,
+    }).start();
+  }
+
+  render() {
+    return (
+      <AnimatedContainer style={{ top: this.state.top }}>
+        <Cover />
+        <Content />
+      </AnimatedContainer>
+    );
+  }
+}
+
+const Container = styled.View`
+  position: absolute;
+  background: white;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+`;
+const AnimatedContainer = Animated.createAnimatedComponent(Container);
+const Cover = styled.View`
+  height: 142px;
+  background: black;
+`;
+const Content = styled.View`
+  height: 900px;
+  background: #f0f3f5;
+`;
