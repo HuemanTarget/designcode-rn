@@ -14,6 +14,7 @@ import { NotificationIcon } from "../components/Icons";
 import Logo from "../components/Logo";
 import Menu from "../components/Menu";
 import { connect } from "react-redux";
+import Avatar from "../components/Avatar";
 
 function mapStateToProps(state) {
   return { action: state.action };
@@ -87,7 +88,7 @@ class HomeScreen extends Component {
                   onPress={this.props.openMenu}
                   style={{ position: "absolute", top: 0, left: 20 }}
                 >
-                  <Avatar source={require("../assets/avatar.jpg")} />
+                  <Avatar />
                 </TouchableOpacity>
                 <Title>Welcome back,</Title>
                 <Name>Josh</Name>
@@ -172,12 +173,12 @@ const Name = styled.Text`
   color: #3c4560;
   font-weight: bold;
 `;
-const Avatar = styled.Image`
-  width: 44px;
-  height: 44px;
-  background: black;
-  border-radius: 22px;
-`;
+// const Avatar = styled.Image`
+//   width: 44px;
+//   height: 44px;
+//   background: black;
+//   border-radius: 22px;
+// `;
 const Subtitle = styled.Text`
   color: #b8bece;
   font-weight: 600;
