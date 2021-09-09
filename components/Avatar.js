@@ -1,5 +1,22 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import { connect } from "react-redux";
+
+function mapStateToProps(state) {
+  return {
+    name: state.name,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    updateName: (name) =>
+      dispatch({
+        type: "UPDATE_NAME",
+        name: name,
+      }),
+  };
+}
 
 class Avatar extends Component {
   state = {
@@ -9,13 +26,19 @@ class Avatar extends Component {
   key = "A51A868B-071E4F4B-B0FAD844-FC0C3FFC";
 
   componentDidMount() {
-    fetch("https://randomuser.me/api/?gender=male")
+    fetch("https://uifaces.co/api?limit=1&random", {
+      headers: new Headers({
+        "X-API-KEY": this.key,
+      }),
+    })
       .then((response) => response.json())
       .then((response) => {
-        // console.log(response.results[0].picture.medium);
         this.setState({
-          photo: response.results[0].picture.medium,
+          photo: response[0].photo,
+          // photo: response.results[0].picture.medium,
         });
+        this.props.updateName(response[0].name);
+        // this.props.updateName(response.results[0].name.first);
       });
   }
 
@@ -24,7 +47,7 @@ class Avatar extends Component {
   }
 }
 
-export default Avatar;
+export default connect(mapStateToProps, mapDispatchToProps)(Avatar);
 
 const Image = styled.Image`
   width: 44px;
